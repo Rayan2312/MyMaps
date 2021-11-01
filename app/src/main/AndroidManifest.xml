@@ -30,6 +30,10 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:name=".CreateMapActivity"
+            android:exported="false"
+            android:label="@string/title_activity_create_map" />
+        <activity
             android:name=".DisplayMapsActivity"
             android:exported="false"
             android:label="@string/title_activity_display_maps" />

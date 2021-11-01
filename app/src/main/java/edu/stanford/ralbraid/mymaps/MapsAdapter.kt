@@ -22,7 +22,7 @@ class MapsAdapter(val context: Context, val userMaps: List<UserMap>, val onClick
         val textViewTitle = holder.itemView.findViewById<TextView>(android.R.id.text1)
         holder.itemView.setOnClickListener(){
             Log.i(TAG, "Tapped on position: $position")
-            OnClickListener.onItemClick(position)
+            onClickListener.onItemClick(position)
 
         }
 

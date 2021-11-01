@@ -1,26 +1,33 @@
 package edu.stanford.ralbraid.mymaps
 
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
+import android.util.Log
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import edu.stanford.ralbraid.mymaps.databinding.ActivityDisplayMapsBinding
+import edu.stanford.ralbraid.mymaps.model.UserMap
 
+private const val TAG = "DisplayMapActivity"
 class DisplayMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityDisplayMapsBinding
+    private lateinit var userMap: UserMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        userMap = intent.getSerializableExtra(EXTRA_USER_MAP) as UserMap
         binding = ActivityDisplayMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.title = userMap.title
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -39,10 +46,15 @@ class DisplayMapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        Log.i(TAG, "userMap to render: $userMap")
+        val boundsBuilder = LatLngBounds.builder()
+        for(place in userMap.places){
+            val latlng = LatLng(place.latitude, place.longitude)
+            mMap.addMarker(MarkerOptions().position(latlng).title(place.title).snippet(place.description))
+            boundsBuilder.include(latlng)
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 1000, 1000, 0))
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build()), 1000, 1000, 0)
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 }
