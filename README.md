@@ -1,6 +1,4 @@
 # MyMaps
- 
-# My Maps 
 
 ## Rayan Albraidi
 
