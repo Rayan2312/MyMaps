@@ -2,11 +2,14 @@ package edu.stanford.ralbraid.mymaps
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.stanford.ralbraid.mymaps.model.UserMap
 import edu.stanford.ralbraid.mymaps.model.Place
 
+private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
     private lateinit var rvMaps: RecyclerView
 
@@ -17,7 +20,13 @@ class MainActivity : AppCompatActivity() {
 
 
         rvMaps.layoutManager= LinearLayoutManager(this)
-        rvMaps.adapter= MapsAdapter(this, generateSampleData())
+        rvMaps.adapter= MapsAdapter(this, generateSampleData(), object: MapsAdapter.OnClickListener {
+            override fun onItemClick(position: Int) {
+                Log.i(TAG, "onItemClick: $position")
+                val intent = Intent(this@MainActivity, DisplayMapsActivity::class.java )
+                startActivity(intent)
+            }
+        })
     }
     private fun generateSampleData(): List<UserMap> {
         return listOf(
