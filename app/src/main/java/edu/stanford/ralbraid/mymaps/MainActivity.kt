@@ -35,8 +35,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         rvMaps = findViewById(R.id.rvMaps)
         fabCreateMap = findViewById(R.id.fabCreateMap)
-        //userMaps = generateSampleData().toMutableList()
+
         userMaps = deSerializeUserMaps(this).toMutableList()
+
 
         rvMaps.layoutManager= LinearLayoutManager(this)
         mapsAdapter = MapsAdapter(this, userMaps, object: MapsAdapter.OnClickListener {
@@ -44,8 +45,8 @@ class MainActivity : AppCompatActivity() {
                 Log.i(TAG, "onItemClick: $position")
                 val intent = Intent(this@MainActivity, DisplayMapsActivity::class.java )
                 intent.putExtra(EXTRA_USER_MAP, userMaps[position] )
-
                 startActivity(intent)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 
             }
         })
