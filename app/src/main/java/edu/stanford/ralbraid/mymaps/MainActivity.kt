@@ -1,5 +1,4 @@
 package edu.stanford.ralbraid.mymaps
-
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
@@ -13,8 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import edu.stanford.ralbraid.mymaps.model.UserMap
 import edu.stanford.ralbraid.mymaps.model.Place
